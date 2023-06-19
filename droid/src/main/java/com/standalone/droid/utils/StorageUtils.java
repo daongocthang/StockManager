@@ -17,17 +17,17 @@ import java.util.List;
  * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
  **/
 public class StorageUtils {
+    private static String TAG = "EXTERNAL_STORAGE";
     public static File getDefaultStorage(Context context) {
         String appName = getApplicationName(context);
-        File storage = new File(Environment.getExternalStorageDirectory(), appName);
-        Log.i("INFO_EXTERNAL", "getStorage: " + storage.getAbsolutePath());
-        if (!storage.exists()) {
-            if (!storage.mkdir()) {
-                Log.e("WRITE_EXTERNAL_STORAGE", "Cannot create a new folder");
+        File file = new File(Environment.getExternalStorageDirectory(), appName);
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                Log.e(TAG, "Cannot create a new folder");
             }
         }
 
-        return storage;
+        return file;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -36,7 +36,14 @@ public class StorageUtils {
         StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
         List<StorageVolume> storageVolumeList = storageManager.getStorageVolumes();
         StorageVolume storageVolume = storageVolumeList.get(1);
-        return new File(storageVolume.getDirectory(), appName);
+        File file= new File(storageVolume.getDirectory(), appName);
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                Log.e(TAG, "Cannot create a new folder");
+            }
+        }
+
+        return file;
     }
 
     public static boolean hasSDCard() {

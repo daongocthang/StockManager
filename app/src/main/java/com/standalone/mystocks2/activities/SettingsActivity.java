@@ -15,6 +15,7 @@ import com.standalone.droid.dbase.DatabaseManager;
 import com.standalone.droid.utils.StorageUtils;
 import com.standalone.mystocks2.R;
 import com.standalone.mystocks2.constant.StringValues;
+import com.standalone.mystocks2.helpers.HistoryTableHandler;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -143,12 +144,18 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void handleBackup() {
-        if(!StorageUtils.hasSDCard()){
+        if (!StorageUtils.hasSDCard()) {
             Toast.makeText(this, "SD card is not detected.", Toast.LENGTH_SHORT).show();
             return;
         }
-        boolean res = DatabaseManager.exportDB(this);
-        if (res) {
+
+        HistoryTableHandler tableHandler = new HistoryTableHandler(DatabaseManager.getDatabase(this));
+        boolean success = tableHandler.getCount() > 0;
+        if (success) {
+            success = DatabaseManager.exportDB(this);
+        }
+
+        if (success) {
             Toast.makeText(this, "Successfully back-up database.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Back-up database failed.", Toast.LENGTH_SHORT).show();
@@ -156,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void handleRestore() {
-        if(!StorageUtils.hasSDCard()){
+        if (!StorageUtils.hasSDCard()) {
             Toast.makeText(this, "SD card is not detected.", Toast.LENGTH_SHORT).show();
             return;
         }
