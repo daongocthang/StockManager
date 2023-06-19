@@ -30,7 +30,7 @@
     <string name="settings">Settings</string>
     <string name="transaction_cost">Transaction Cost</string>
     <string name="value_added_tax">Value Added Tax</string>
-    <string name="recovery">Recovery Database</string>
+    <string name="recovery">Database Recovery</string>
     <string name="stop_threshold">Stop Loss Threshold</string>
     <string name="save">Save</string>
     <string name="backup">Backup</string>
