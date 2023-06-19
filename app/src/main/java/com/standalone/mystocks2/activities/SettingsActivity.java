@@ -1,16 +1,7 @@
 package com.standalone.mystocks2.activities;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -18,12 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.standalone.droid.dbase.DatabaseManager;
+import com.standalone.droid.utils.StorageUtils;
 import com.standalone.mystocks2.R;
 import com.standalone.mystocks2.constant.StringValues;
 
@@ -154,6 +143,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void handleBackup() {
+        if(!StorageUtils.hasSDCard()){
+            Toast.makeText(this, "SD card is not detected.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         boolean res = DatabaseManager.exportDB(this);
         if (res) {
             Toast.makeText(this, "Successfully back-up database.", Toast.LENGTH_SHORT).show();
@@ -163,6 +156,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void handleRestore() {
+        if(!StorageUtils.hasSDCard()){
+            Toast.makeText(this, "SD card is not detected.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         boolean res = DatabaseManager.importDB(this);
         if (res) {
             Toast.makeText(this, "Successfully restore database.", Toast.LENGTH_SHORT).show();

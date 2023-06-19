@@ -1,7 +1,6 @@
 package com.standalone.mystocks2.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -157,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
 
         return new Double[]{(double) win / length, totalProfit + totalLoss, totalProfit, Math.abs(totalLoss)};
     }
-
 
     private boolean checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

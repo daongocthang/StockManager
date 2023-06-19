@@ -33,7 +33,7 @@ public class DatabaseManager {
     public static boolean importDB(Context context) {
         try {
             String dbName = getProperty(context, "database_name");
-            File dir = StorageUtils.getDefaultStorage(context);
+            File dir = getExtStorage(context);
             getDatabase(context).close();
             if (dir.canRead()) {
                 File dst = context.getDatabasePath(dbName);
@@ -43,7 +43,6 @@ public class DatabaseManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("ERR_SQLITE", "ImportDB: " + e.getMessage());
         }
 
         return false;
@@ -52,7 +51,7 @@ public class DatabaseManager {
     public static boolean exportDB(Context context) {
         try {
             String dbName = getProperty(context, "database_name");
-            File dir = StorageUtils.getDefaultStorage(context);
+            File dir = getExtStorage(context);
             getDatabase(context).close();
             if (dir.canWrite()) {
                 File src = context.getDatabasePath(dbName);
@@ -62,10 +61,17 @@ public class DatabaseManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("ERR_SQLITE", "ExportDB: " + e.getMessage());
         }
 
         return false;
+    }
+
+    private static File getExtStorage(Context context) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            return StorageUtils.getRemovableStorage(context);
+        }
+
+        return StorageUtils.getDefaultStorage(context);
     }
 
     private static void transfer(Context context, File src, File dst) throws IOException {
