@@ -90,7 +90,7 @@ public class TradeDialogFragment extends BottomSheetDialogFragment {
         ImageButton btDatePicker = view.findViewById(R.id.imDatePicker);
 
         final RecyclerView rvSuggestion = view.findViewById(R.id.rvSuggestion);
-        ViewUtils.setNumberSuggestion(this.getContext(), edShares, rvSuggestion, 5, true);
+        ViewUtils.setNumberSuggestion(this.getContext(), edShares, rvSuggestion, 1, 5, true);
 
         ViewUtils.addCancelButton(view, edSymbol, R.id.imSymbol);
         ViewUtils.addCancelButton(view, edPrice, R.id.imPrice);

@@ -2,6 +2,8 @@ package com.standalone.droid.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -9,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.standalone.droid.R;
 
-public class SuggestionsAdapter extends BaseAdapter<String, SuggestionsAdapter.ViewHolder> {
+public class SuggestionsAdapter extends BaseAdapter<String, SuggestionsAdapter.ViewHolder> implements Filterable {
     private final ItemClickListener listener;
 
     public SuggestionsAdapter(ItemClickListener listener) {
@@ -25,6 +27,11 @@ public class SuggestionsAdapter extends BaseAdapter<String, SuggestionsAdapter.V
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(getItem(position), listener, this);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

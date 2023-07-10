@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ViewUtils {
-    public static void setNumberSuggestion(Context context, EditText editText, RecyclerView recyclerView, int maxLength, boolean reverse) {
+    public static void setNumberSuggestion(Context context, EditText editText, RecyclerView recyclerView, int skip, int limit, boolean reverse) {
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         SuggestionsAdapter adapter = new SuggestionsAdapter(new SuggestionsAdapter.ItemClickListener() {
             @Override
@@ -63,17 +63,17 @@ public class ViewUtils {
                     itemList.clear();
                     String sanityText = editText.getText().toString().replaceAll(",", "");
 
-                    if (sanityText.length() > maxLength) {
+                    if (sanityText.length() > limit) {
                         sanityText = sanityText.substring(0, sanityText.length() - 1);
                     } else {
                         int value = Integer.parseInt(sanityText);
 
-                        int count = 0;
-                        while (count < maxLength) {
+                        int count = (sanityText.length() > skip) ? 0 : skip;
+                        while (count < limit) {
                             count++;
                             int nextValue = (int) (value * Math.pow(10, count));
                             String valueAsString = String.valueOf(nextValue);
-                            if (valueAsString.length() > maxLength) break;
+                            if (valueAsString.length() > limit) break;
                             itemList.add(String.format(Locale.US, "%,d", nextValue));
                         }
 
