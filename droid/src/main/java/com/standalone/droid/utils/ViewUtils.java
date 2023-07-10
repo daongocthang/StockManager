@@ -5,47 +5,91 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.standalone.droid.adapters.SuggestionsAdapter;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class ViewUtils {
-    public static void setHumanizedDecimalType(EditText edt) {
-        edt.setInputType(InputType.TYPE_CLASS_NUMBER);
-        edt.addTextChangedListener(new TextWatcher() {
+    public static void setNumberSuggestion(Context context, EditText editText, RecyclerView recyclerView, int maxLength, boolean reverse) {
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        SuggestionsAdapter adapter = new SuggestionsAdapter(new SuggestionsAdapter.ItemClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onClick(String text) {
+                editText.setText(text);
+                editText.setSelection(text.length());
+            }
+        });
 
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        editText.addTextChangedListener(new TextWatcher() {
+            final List<String> itemList = new ArrayList<>();
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                edt.removeTextChangedListener(this);
-                String desired = edt.getText().toString().replaceAll(",", "");
+                if (!editText.isEnabled()) return;
 
-                // preventing Number Format Exception
-                if (desired.length() > 15) {
-                    desired = desired.substring(0, desired.length() - 1);
+                editText.removeTextChangedListener(this);
+
+                if (s.length() > 0) {
+
+                    itemList.clear();
+                    String sanityText = editText.getText().toString().replaceAll(",", "");
+
+                    if (sanityText.length() > maxLength) {
+                        sanityText = sanityText.substring(0, sanityText.length() - 1);
+                    } else {
+                        int value = Integer.parseInt(sanityText);
+
+                        int count = 0;
+                        while (count < maxLength) {
+                            count++;
+                            int nextValue = (int) (value * Math.pow(10, count));
+                            String valueAsString = String.valueOf(nextValue);
+                            if (valueAsString.length() > maxLength) break;
+                            itemList.add(String.format(Locale.US, "%,d", nextValue));
+                        }
+
+                        if (reverse) Collections.reverse(itemList);
+                        adapter.setItemList(itemList);
+                    }
+
+                    String newText = String.format(Locale.US, "%,d", Integer.parseInt(sanityText));
+                    editText.setText(newText);
+
+                    editText.setSelection(editText.getText().toString().length());
+                } else {
+                    adapter.clear();
                 }
-                if (isNumeric(desired)) {
-                    Long longValue = Long.parseLong(desired);
-                    String fmtStr = String.format(Locale.US, "%,d", longValue);
-                    edt.setText(fmtStr);
-                    edt.setSelection(edt.getText().length());
-                }
-                edt.addTextChangedListener(this);
+
+                editText.addTextChangedListener(this);
             }
         });
     }

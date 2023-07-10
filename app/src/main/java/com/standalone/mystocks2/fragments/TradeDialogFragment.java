@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.standalone.droid.dbase.DatabaseManager;
@@ -88,7 +89,9 @@ public class TradeDialogFragment extends BottomSheetDialogFragment {
         Button btSubmit = view.findViewById(R.id.btSubmit);
         ImageButton btDatePicker = view.findViewById(R.id.imDatePicker);
 
-        ViewUtils.setHumanizedDecimalType(edShares);
+        final RecyclerView rvSuggestion = view.findViewById(R.id.rvSuggestion);
+        ViewUtils.setNumberSuggestion(this.getContext(), edShares, rvSuggestion, 5, true);
+
         ViewUtils.addCancelButton(view, edSymbol, R.id.imSymbol);
         ViewUtils.addCancelButton(view, edPrice, R.id.imPrice);
         ViewUtils.addCancelButton(view, edShares, R.id.imShares);

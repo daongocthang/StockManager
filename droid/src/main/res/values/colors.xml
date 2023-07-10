@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">@android:color/holo_green_dark</color>
-    <color name="colorAccent">#000000</color>
+    <color name="colorAccent">#050505</color>
     <color name="primary_dark">#0d47a1</color>
     <color name="primary">#4285F4</color>
     <color name="danger_dark">#cc0000</color>

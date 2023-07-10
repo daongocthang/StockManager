@@ -18,7 +18,6 @@ import java.util.List;
 public abstract class AdapterFilterable<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> implements Filterable {
     protected List<T> itemList;
 
-
     public View instantiateItemView(@LayoutRes int resId, @NotNull ViewGroup parent) {
         return LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
     }
