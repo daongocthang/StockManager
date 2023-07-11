@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/ui_normal_button"
             android:text="@string/save"
             android:textAllCaps="true"
             android:textColor="@color/white"

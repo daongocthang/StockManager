@@ -14,7 +14,7 @@
         android:text="@string/item"
         android:textColor="@color/colorAccent"
         android:padding="8dp"
-        android:background="@drawable/ui_outline"
+        android:background="@drawable/ui_outline_item"
         android:gravity="center"
         android:textSize="18sp" />
 
