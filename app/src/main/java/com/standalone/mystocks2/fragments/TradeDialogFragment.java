@@ -91,7 +91,6 @@ public class TradeDialogFragment extends BottomSheetDialogFragment {
 
         final RecyclerView rvSuggestion = view.findViewById(R.id.rvSuggestion);
         ViewUtils.setNumberSuggestion(this.getContext(), edShares, rvSuggestion, 1, 5, true);
-
         ViewUtils.addCancelButton(view, edSymbol, R.id.imSymbol);
         ViewUtils.addCancelButton(view, edPrice, R.id.imPrice);
         ViewUtils.addCancelButton(view, edShares, R.id.imShares);

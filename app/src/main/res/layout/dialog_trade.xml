@@ -118,14 +118,20 @@
             android:src="@drawable/baseline_calendar_month" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSuggestion"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/grpShares"
         android:layout_margin="2dp"
-        android:elevation="10dp"
-        android:outlineProvider="bounds" />
+        android:elevation="2dp"
+        android:outlineProvider="bounds">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSuggestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+    </LinearLayout>
 
 
     <Button
@@ -133,7 +139,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grpDate"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/submit"
         android:textAllCaps="true"
