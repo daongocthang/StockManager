@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -87,12 +86,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderView() {
-        for (int i = 0; i < mainGrid.getChildCount(); i++) {
-            CardView cardView = (CardView) mainGrid.getChildAt(i);
-            if (cardView.getCardBackgroundColor().getDefaultColor() != -1)
-                cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
-
         Double[] values = evaluateInvestingValues();
         if (values == null) return;
 
@@ -109,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    cardView.setCardBackgroundColor(Color.parseColor("#669900"));
-
                     switch (finalId) {
                         case 0:
                             startActivity(new Intent(MainActivity.this, AssetActivity.class));

@@ -1,5 +1,6 @@
 package com.standalone.mystocks2.activities;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,9 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.standalone.droid.dbase.DatabaseManager;
+import com.standalone.droid.utils.AlertUtils;
 import com.standalone.droid.utils.StorageUtils;
 import com.standalone.mystocks2.R;
 import com.standalone.mystocks2.constant.StringValues;
@@ -111,6 +114,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         btSave.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 handleSave(values);
@@ -120,13 +124,35 @@ public class SettingsActivity extends AppCompatActivity {
         btRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handleRestore();
+
+                AlertUtils.showConfirmDialog(SettingsActivity.this, "Do you want to restore?", new AlertUtils.OnClickListener() {
+                    @Override
+                    public void onPositive(DialogInterface dialogInterface, int i) {
+                        handleRestore();
+                    }
+
+                    @Override
+                    public void onNegative(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
             }
         });
         btBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handleBackup();
+                AlertUtils.showConfirmDialog(SettingsActivity.this, "Do you want to backup?", new AlertUtils.OnClickListener() {
+                    @Override
+                    public void onPositive(DialogInterface dialogInterface, int i) {
+                        handleBackup();
+                    }
+
+                    @Override
+                    public void onNegative(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+
             }
         });
     }
@@ -156,7 +182,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         if (success) {
-            Toast.makeText(this, "Successfully back-up database.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Successfully backup database.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Back-up database failed.", Toast.LENGTH_SHORT).show();
         }

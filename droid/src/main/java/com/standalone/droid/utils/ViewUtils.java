@@ -45,6 +45,15 @@ public class ViewUtils {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    adapter.clear();
+                }
+            }
+        });
+
         editText.addTextChangedListener(new TextWatcher() {
             final List<String> itemList = new ArrayList<>();
 
@@ -63,7 +72,7 @@ public class ViewUtils {
 
                 editText.removeTextChangedListener(this);
 
-                if (s.length() > 0) {
+                if (s.length() > 0 && editText.hasFocus()) {
 
                     itemList.clear();
                     String sanityText = editText.getText().toString().replaceAll(",", "");
